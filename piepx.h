@@ -8,12 +8,13 @@
 #include <unistd.h>
 #include "libft.h"
 
-// typedef struct s_list
-// {
-//     char    **cmds;
-//     struct s_list *next;
+typedef struct s_list
+{
+    char    **command;
+    struct s_list *next;
+    char   *path;
     
-// } t_list;
+} t_list;
 
 
 typedef struct s_data
@@ -22,8 +23,7 @@ typedef struct s_data
     char    *limiter;
     int     infile;
     int     outfile;
-    char    **cmd;
-    char    *path;
+    t_list    *cmds;
     int     nb_cmds;
 } t_data;
 
