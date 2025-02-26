@@ -6,7 +6,7 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:04:42 by abdel-ha          #+#    #+#             */
-/*   Updated: 2024/12/02 14:04:43 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:44:43 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,18 @@ char	*ft_strcpy(char *dest, char *src)
 	return (dest);
 }
 
-char	*ft_strdup(char *s1)
-{
-	int		len;
-	char	*result;
+// char	*ft_strdup(char *s1)
+// {
+// 	int		len;
+// 	char	*result;
 
-	len = ft_strlen(s1) + 1;
-	result = (char *)ft_calloc(len, 1);
-	if (!result)
-		return (NULL);
-	ft_strcpy(result, s1);
-	return (result);
-}
+// 	len = ft_strlen(s1) + 1;
+// 	result = (char *)ft_calloc(len, 1);
+// 	if (!result)
+// 		return (NULL);
+// 	ft_strcpy(result, s1);
+// 	return (result);
+// }
 
 char	*ft_strchr(char *s, int c)
 {

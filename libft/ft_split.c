@@ -6,13 +6,22 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 15:26:10 by abdel-ha          #+#    #+#             */
-/*   Updated: 2024/11/15 14:54:48 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:43:54 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*ft_checksep(char *s, char c, int *index)
+char **free_split(char **arr, int i)
+{
+
+	while (i > 0)
+		free(arr[--i]);
+	free(arr);
+	return (NULL);
+}
+
+static char	*ft_checksep(char *s, char *sep, int *index)
 {
 	int		start;
 	int		i;
@@ -20,10 +29,10 @@ static char	*ft_checksep(char *s, char c, int *index)
 	char	*ptr;
 
 	start = *index;
-	while (s[start] && s[start] == c)
+	while (s[start] && ft_strchr(sep, s[start]))
 		start++;
 	end = start;
-	while (s[end] && s[end] != c)
+	while (s[end] && !ft_strchr(sep, s[end]))
 		end++;
 	*index = end + 1;
 	if (start >= end)
@@ -38,7 +47,7 @@ static char	*ft_checksep(char *s, char c, int *index)
 	return (ptr);
 }
 
-static int	ft_count_words(char *s, char c)
+static int	ft_count_words(char *s, char *sep)
 {
 	int	count;
 	int	i;
@@ -49,19 +58,19 @@ static int	ft_count_words(char *s, char c)
 	inword = 0;
 	while (s[i])
 	{
-		if (!inword && s[i] != c)
+		if (!inword && !ft_strchr(sep, s[i]))
 		{
 			inword = 1;
 			count++;
 		}
-		if (inword && s[i] == c)
+		if (ft_strchr(sep, s[i]))
 			inword = 0;
 		i++;
 	}
 	return (count);
 }
 
-char	**ft_split(char *s, char c)
+char	**ft_split(char *s, char *sep)
 {
 	int	i;
 	char	**arr;
@@ -70,31 +79,18 @@ char	**ft_split(char *s, char c)
 	if (!s)
 		return (NULL);
 	i = 0;
-	index = 0;
-	arr = (char **)malloc((ft_count_words(s, c) + 1) * sizeof(char *));
+	index = ft_count_words(s, sep);
+	arr = (char **)malloc(index + 1 * sizeof(char *));
 	if (!arr)
 		return (NULL);
-	while (i < ft_count_words(s, c))
+	index = 0;
+	while (i < ft_count_words(s, sep))
 	{
-		arr[i] = ft_checksep(s, c, &index);
+		arr[i] = ft_checksep(s, sep, &index);
 		if (!arr[i])
-		{
-			while (i > 0)
-				free(arr[--i]);
-			free(arr);
-			return (NULL);
-		}
+			return (free_split(arr, i));
 		i++;
 	}
 	arr[i] = NULL;
 	return (arr);
-}
-#include <stdio.h>
-int main()
-{
-	char *str = "BIBO abdelah abll3ali la7ya big la7ya";
-
-	char **t = ft_split(str , 32);
-	printf("%s %s",t[0],t[3]);
-	return 0;
 }

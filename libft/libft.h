@@ -6,7 +6,7 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 17:41:21 by abdel-ha          #+#    #+#             */
-/*   Updated: 2024/11/11 11:48:55 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:42:46 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char				*ft_strtrim(char  *s1, char  *set);
 
 char				*ft_strjoin(char  *s1, char  *s2);
 
-char				**ft_split(char  *s, char c);
+char				**ft_split(char  *s, char *sep);
 
 char				*ft_itoa(int n);
 

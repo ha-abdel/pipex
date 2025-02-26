@@ -1,7 +1,7 @@
 NAME = pipex
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3
-SRCS = main.c
+SRCS = pipex.c
 
 OBJS = $(SRCS:.c=.o)
 
