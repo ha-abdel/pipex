@@ -85,7 +85,6 @@ char    *get_path(t_data **data, char *command)
     char *full_path;
 
     paths = ft_split((*data)->path_line, ":");
-    // free(path_env);
     i = 0;
     while (paths[i])
     {
@@ -97,13 +96,13 @@ char    *get_path(t_data **data, char *command)
         strcat(full_path, command);
         if (access(full_path, X_OK) == 0)
         {
-            // ft_free_split(paths);
+            free_split(paths);
             return (full_path);
         }
         free(full_path);
         i++;
     }
-    // ft_free_split(paths);
+    free_split(paths);
     return (NULL);
 }
 
@@ -122,6 +121,14 @@ void    fill_command(t_data **data, int ac, char **av)
         if (!new_cmd)
             return;
         new_cmd->command = ft_split(av[i], "    ");
+        if (!new_cmd->command[0])
+        {
+            new_cmd->command = calloc(2 , sizeof(char *));
+            if (!new_cmd->command)
+                return;
+            new_cmd->command[0] = ft_strdup(av[i]);
+            new_cmd->command[1] = NULL;
+        }
         new_cmd->path = get_path(data, new_cmd->command[0]);
         new_cmd->next = NULL;
         if (!current)
@@ -159,16 +166,16 @@ void    child(t_data **data, char **env, int fd[2], t_cmd *tmp)
     {
         dup2((*data)->old_fd, 0);
         dup2(fd[1], 1);
+        execve(tmp->path, tmp->command, env);
+    }
+    else
+    {
         if(tmp->path == NULL)
         {
             printf("command not found\n");
             clean_all(data);
             exit(1);
         }
-        execve(tmp->path, tmp->command, env);
-    }
-    else
-    {
         waitpid(pid, NULL, 0);
         close(fd[1]);
         close((*data)->old_fd);
@@ -191,15 +198,18 @@ void    handle_first_cmd(t_data **data, char **env, int fd[2], t_cmd *tmp)
             dup2(fd[1], 1);
             close(fd[1]);
         }
-        if(tmp->path == NULL)
-        {
-            printf("command not found\n");
-            exit(1);
-        }
         execve(tmp->path, tmp->command, env);
     }
     else
     {
+        if(tmp->path == NULL)
+        {
+            printf("command not found\n");
+            clean_all(data);
+            close(fd[0]);
+            close(fd[1]);
+            exit(1);
+        }
         close(fd[1]);
         if((*data)->old_fd != -1)
             close((*data)->old_fd);
@@ -218,16 +228,17 @@ void    handle_last_cmd(t_data **data, char **env, int fd[2], t_cmd *tmp)
         dup2((*data)->outfile, 1);
         close((*data)->old_fd);
         close((*data)->outfile);
-        if(tmp->path == NULL)
-        {
-            ft_putstr_fd("command not found\n", 2);
-            exit(1);
-        }
+        
         execve(tmp->path, tmp->command, env);
-        perror(tmp->command[0]);
+        // perror(tmp->command[0]);
     }
     else
     {
+        if(tmp->path == NULL)
+        {
+            ft_putstr_fd("command not found\n", 1);
+            exit(1);
+        }
         close(fd[1]);
         if((*data)->old_fd != -1)
             close((*data)->old_fd);
