@@ -1,3 +1,7 @@
 {
-    "functionHeaderExtension.headerFilePath": "/home/abdel-ha/Desktop/pipex_repo/piepx.h"
+    "functionHeaderExtension.headerFilePath": "/home/abdel-ha/Desktop/pipex_repo/piepx.h",
+    "files.associations": {
+        "get_next_line.h": "c",
+        "libft.h": "c"
+    }
 }

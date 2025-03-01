@@ -8,29 +8,38 @@
 #include <sys/wait.h>
 // #include <p>
 
-void    init_vars(t_data **data, char **av, int ac)
+void   open_files(t_data **data, char **av, int ac)
 {
-    (*data)->limiter = NULL;
-    (*data)->infile = open(av[1], O_RDONLY);
-    (*data)->outfile = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC, 0777);
-    (*data)->cmds = NULL;
-    (*data)->old_fd = -1;
-    if((*data)->infile == -1 || (*data)->outfile == -1)
-    {
-        perror("Error");
-        exit(1);
-    }
     if (ft_strncmp(av[1], "here_doc", 8) == 0)
     {
         (*data)->here_doc = 1;
         (*data)->limiter = av[2];
         (*data)->nb_cmds = ac - 4;
+        (*data)->here_doc_fd = open("/tmp/abdo", O_WRONLY | O_CREAT | O_TRUNC, 0644);
     }
     else
     {
         (*data)->here_doc = 0;
+        (*data)->limiter = NULL;
         (*data)->nb_cmds = ac - 3;
+        (*data)->infile = open(av[1], O_RDONLY);
     }
+    (*data)->outfile = open(av[ac - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
+}
+void    init_vars(t_data **data, char **av, int ac)
+{
+    (*data)->infile = 0;
+    (*data)->here_doc_fd = 0;
+    open_files(data, av, ac);
+    if((*data)->infile == -1 || (*data)->outfile == -1 || (*data)->here_doc_fd == -1)
+        {
+            perror("Error");
+            exit(1);
+        }
+    (*data)->cmds = NULL;
+    (*data)->old_fd = -1;
+    
+
 }
 
 void    set_path_line(t_data **data, char **env)
@@ -85,57 +94,63 @@ char    *get_path(t_data **data, char *command)
     char *full_path;
 
     paths = ft_split((*data)->path_line, ":");
+    if(!paths)
+        return NULL;
     i = 0;
     while (paths[i])
     {
-        full_path = malloc(strlen(paths[i]) + strlen(command) + 2);
+        full_path = malloc(ft_strlen(paths[i]) + ft_strlen(command) + 2);
         if (!full_path)
             return (NULL);
-        strcpy(full_path, paths[i]);
+        ft_strcpy(full_path, paths[i]);
         strcat(full_path, "/");
         strcat(full_path, command);
         if (access(full_path, X_OK) == 0)
         {
-            free_split(paths);
+            // free_split(paths);
             return (full_path);
         }
         free(full_path);
         i++;
     }
-    free_split(paths);
+    // free_split(paths);
     return (NULL);
 }
 
+
 void    fill_command(t_data **data, int ac, char **av)
 {
-    int i = 2;
+    int i;
     t_cmd *current;
     t_cmd *new_cmd;
+    char *path;
 
+    i = 2;
     if ((*data)->here_doc)
         i = 3;
     current = NULL;
     while (i < ac - 1)
     {
-        new_cmd = malloc(sizeof(t_cmd));
-        if (!new_cmd)
-            return;
-        new_cmd->command = ft_split(av[i], "    ");
-        if (!new_cmd->command[0])
-        {
-            new_cmd->command = calloc(2 , sizeof(char *));
-            if (!new_cmd->command)
-                return;
-            new_cmd->command[0] = ft_strdup(av[i]);
-            new_cmd->command[1] = NULL;
-        }
-        new_cmd->path = get_path(data, new_cmd->command[0]);
-        new_cmd->next = NULL;
-        if (!current)
-            (*data)->cmds = new_cmd;
-        else
-            current->next = new_cmd;
-        current = new_cmd;
+        // new_cmd = malloc(sizeof(t_cmd));
+        // if (!new_cmd)
+        //     return;
+        // new_cmd->command = ft_split(av[i], " \t");
+        // if (!new_cmd->command[0])
+        // {
+        //     new_cmd->command = calloc(2 , sizeof(char *));
+        //     if (!new_cmd->command)
+        //         return;
+        //     new_cmd->command[0] = ft_strdup(av[i]);
+        //     new_cmd->command[1] = NULL;
+        // }
+        // new_cmd->path = get_path(data, new_cmd->command[0]);
+        // new_cmd->next = NULL;
+        // if (!current)
+        //     (*data)->cmds = new_cmd;
+        // else
+        //     current->next = new_cmd;
+        // current = new_cmd;
+        new_cmd = ft_lstnew1(ft_split(av[i], " \t"), get_path(data, ft_split(av[i], " \t")[0]), av[i]);
         i++;
     }
 }
@@ -159,94 +174,7 @@ void    print_commands(t_data *data)
     }
 }
 
-void    child(t_data **data, char **env, int fd[2], t_cmd *tmp)
-{
-    int pid = fork();
-    if(pid == 0)
-    {
-        dup2((*data)->old_fd, 0);
-        dup2(fd[1], 1);
-        execve(tmp->path, tmp->command, env);
-    }
-    else
-    {
-        if(tmp->path == NULL)
-        {
-            printf("command not found\n");
-            clean_all(data);
-            exit(1);
-        }
-        waitpid(pid, NULL, 0);
-        close(fd[1]);
-        close((*data)->old_fd);
-        (*data)->old_fd = fd[0];
-    }
-}
 
-void    handle_first_cmd(t_data **data, char **env, int fd[2], t_cmd *tmp)
-{
-    int pid = fork();
-    if(pid == 0)
-    {
-        close(fd[0]);
-        dup2((*data)->infile, 0);
-        close((*data)->infile);
-        if((*data)->nb_cmds == 1)
-            dup2((*data)->outfile, 1);
-        else
-        {
-            dup2(fd[1], 1);
-            close(fd[1]);
-        }
-        execve(tmp->path, tmp->command, env);
-    }
-    else
-    {
-        if(tmp->path == NULL)
-        {
-            printf("command not found\n");
-            clean_all(data);
-            close(fd[0]);
-            close(fd[1]);
-            exit(1);
-        }
-        close(fd[1]);
-        if((*data)->old_fd != -1)
-            close((*data)->old_fd);
-        (*data)->old_fd = fd[0];
-        // waitpid(pid, NULL, 0);
-        // close(fd[0]);
-    }
-}
-
-void    handle_last_cmd(t_data **data, char **env, int fd[2], t_cmd *tmp)
-{
-    int pid = fork();
-    if(pid == 0)
-    {
-        dup2((*data)->old_fd, 0);
-        dup2((*data)->outfile, 1);
-        close((*data)->old_fd);
-        close((*data)->outfile);
-        
-        execve(tmp->path, tmp->command, env);
-        // perror(tmp->command[0]);
-    }
-    else
-    {
-        if(tmp->path == NULL)
-        {
-            ft_putstr_fd("command not found\n", 1);
-            exit(1);
-        }
-        close(fd[1]);
-        if((*data)->old_fd != -1)
-            close((*data)->old_fd);
-        (*data)->old_fd = fd[0];
-        // waitpid(pid, NULL, 0);
-        // close(fd[0]);
-    }
-}
 
 int main(int ac, char **av, char **env)
 {
@@ -264,6 +192,8 @@ int main(int ac, char **av, char **env)
     init_vars(&data, av, ac);
     set_path_line(&data, env);
     fill_command(&data, ac, av);
+    if(data->here_doc)
+        handle_here_doc(&data, fd);
     // print_commands(data);
     tmp = data->cmds;
     while (i < data->nb_cmds)

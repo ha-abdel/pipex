@@ -6,26 +6,14 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:04:23 by abdel-ha          #+#    #+#             */
-/*   Updated: 2024/12/03 09:50:21 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/01 14:36:41 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include "libft.h"
-
-// int	ft_strlen(char *s)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (!s)
-// 		return (0);
-// 	while (s[i])
-// 	{
-// 		i++;
-// 	}
-// 	return (i);
-// }
+#include <fcntl.h>
+#include <stdio.h>
 
 void	*ft_calloc(int count, int size)
 {
@@ -35,8 +23,6 @@ void	*ft_calloc(int count, int size)
 
 	len = count * size;
 	i = 0;
-	if (size != 0 && count > (int)-1 / size)
-		return (NULL);
 	ptr = (void *)malloc(len);
 	if (!ptr)
 		return (NULL);
