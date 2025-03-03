@@ -6,7 +6,7 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:04:23 by abdel-ha          #+#    #+#             */
-/*   Updated: 2025/03/01 14:36:41 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:39:02 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,24 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-void	*ft_calloc(int count, int size)
-{
-	int		len;
-	void	*ptr;
-	int		i;
+// void	*ft_calloc(int count, int size)
+// {
+// 	int		len;
+// 	void	*ptr;
+// 	int		i;
 
-	len = count * size;
-	i = 0;
-	ptr = (void *)malloc(len);
-	if (!ptr)
-		return (NULL);
-	while (i < len)
-	{
-		((char *)ptr)[i] = '\0';
-		i++;
-	}
-	return (ptr);
-}
+// 	len = count * size;
+// 	i = 0;
+// 	ptr = (void *)malloc(len);
+// 	if (!ptr)
+// 		return (NULL);
+// 	while (i < len)
+// 	{
+// 		((char *)ptr)[i] = '\0';
+// 		i++;
+// 	}
+// 	return (ptr);
+// }
 
 char	*fill_line(char **leftover)
 {
@@ -97,7 +97,7 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
+		return (free(leftover), leftover = NULL, NULL);
 	if (leftover && ft_strchr(leftover, '\n'))
 		return (fill_line(&leftover));
 	if (!leftover)

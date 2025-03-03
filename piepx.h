@@ -1,12 +1,14 @@
 #ifndef PIPEX_H
 #define PIPEX_H
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
+#include "libft/get_next_line.h"
 #include "libft/libft.h"
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <string.h>
 
 typedef struct s_cmd
 {
@@ -34,6 +36,10 @@ typedef struct s_data
 
 
 /* FUNCTIONS */
+void   free_2d(char **arr);
+char    *get_path(t_data **data, char *command);
+void    free_command(t_cmd **cmd);
+void    set_path_line(t_data **data, char **env);
 t_cmd	*ft_lstnew1(char **command, char *path, char *av);
 void	ft_lstadd_back1(t_cmd **lst, t_cmd *new);
 t_cmd	*ft_lstlast1(t_cmd *lst);

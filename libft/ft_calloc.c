@@ -6,7 +6,7 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 15:20:18 by abdel-ha          #+#    #+#             */
-/*   Updated: 2024/11/10 18:09:05 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/03 13:40:59 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void	*ft_calloc(int count, int size)
 	void	*ptr;
 
 	len = count * size;
-	if (size != 0 && count > (int) - 1 / size)
-		return (NULL);
 	ptr = (void *)malloc(len);
 	if (!ptr)
 		return (NULL);

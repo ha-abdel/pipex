@@ -6,7 +6,7 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 15:26:10 by abdel-ha          #+#    #+#             */
-/*   Updated: 2025/02/26 16:43:54 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:08:44 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char	*ft_checksep(char *s, char *sep, int *index)
 	end = start;
 	while (s[end] && !ft_strchr(sep, s[end]))
 		end++;
-	*index = end + 1;
+	*index = end;
 	if (start >= end)
 		return (NULL);
 	ptr = (char *)malloc(end - start + 1);
@@ -80,7 +80,7 @@ char	**ft_split(char *s, char *sep)
 		return (NULL);
 	i = 0;
 	index = ft_count_words(s, sep);
-	arr = (char **)malloc(index + 1 * sizeof(char *));
+	arr = (char **)malloc((index + 1 )* sizeof(char *));
 	if (!arr)
 		return (NULL);
 	index = 0;
