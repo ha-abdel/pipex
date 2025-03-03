@@ -31,7 +31,7 @@ void	ft_lstadd_back1(t_cmd **lst, t_cmd *new)
 		*lst = new;
 		return ;
 	}
-	last = ft_lstlast(*lst);
+	last = ft_lstlast1(*lst);
 	last->next = new;
 }
 

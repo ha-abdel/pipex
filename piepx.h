@@ -28,6 +28,8 @@ typedef struct s_data
     int     nb_cmds;
     char   *path_line;
     int     old_fd;
+    int     *pid;
+    int     pid_index;
 } t_data;
 
 

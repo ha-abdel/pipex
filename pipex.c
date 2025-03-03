@@ -6,7 +6,18 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
-// #include <p>
+
+void   free_2d(char **arr)
+{
+    int i = 0;
+
+    while (arr[i])
+    {
+        free(arr[i]);
+        i++;
+    }
+    free(arr);
+}
 
 void   open_files(t_data **data, char **av, int ac)
 {
@@ -38,6 +49,8 @@ void    init_vars(t_data **data, char **av, int ac)
         }
     (*data)->cmds = NULL;
     (*data)->old_fd = -1;
+    // (*data)->pid = malloc(sizeof(int) * (*data)->nb_cmds);
+    // (*data)->pid_index = 0;
     
 
 }
@@ -84,36 +97,42 @@ void    clean_all(t_data **data)
         free(tmp);
         tmp = next;
     }
+    if((*data)->path_line)
+        free((*data)->path_line);
+    if((*data)->here_doc)
+        close((*data)->here_doc_fd);
+    close((*data)->infile);
+    close((*data)->outfile);
     free(*data);
 }
 
 char    *get_path(t_data **data, char *command)
 {
-    int i = 0;
+    int i;
     char **paths;
     char *full_path;
 
     paths = ft_split((*data)->path_line, ":");
     if(!paths)
-        return NULL;
+        return (NULL);
     i = 0;
     while (paths[i])
     {
-        full_path = malloc(ft_strlen(paths[i]) + ft_strlen(command) + 2);
+        full_path = ft_calloc(ft_strlen(paths[i]) + ft_strlen(command) + 2, 1);
         if (!full_path)
             return (NULL);
         ft_strcpy(full_path, paths[i]);
-        strcat(full_path, "/");
-        strcat(full_path, command);
+        ft_strlcat(full_path, "/", ft_strlen(paths[i]) + 1);
+        ft_strlcat(full_path, command, ft_strlen(paths[i]) + ft_strlen(command) + 1);
         if (access(full_path, X_OK) == 0)
         {
-            // free_split(paths);
+            free_2d(paths);
             return (full_path);
         }
         free(full_path);
         i++;
     }
-    // free_split(paths);
+    free_2d(paths);
     return (NULL);
 }
 
@@ -123,7 +142,6 @@ void    fill_command(t_data **data, int ac, char **av)
     int i;
     t_cmd *current;
     t_cmd *new_cmd;
-    char *path;
 
     i = 2;
     if ((*data)->here_doc)
@@ -131,26 +149,18 @@ void    fill_command(t_data **data, int ac, char **av)
     current = NULL;
     while (i < ac - 1)
     {
-        // new_cmd = malloc(sizeof(t_cmd));
-        // if (!new_cmd)
-        //     return;
-        // new_cmd->command = ft_split(av[i], " \t");
-        // if (!new_cmd->command[0])
-        // {
-        //     new_cmd->command = calloc(2 , sizeof(char *));
-        //     if (!new_cmd->command)
-        //         return;
-        //     new_cmd->command[0] = ft_strdup(av[i]);
-        //     new_cmd->command[1] = NULL;
-        // }
-        // new_cmd->path = get_path(data, new_cmd->command[0]);
-        // new_cmd->next = NULL;
-        // if (!current)
-        //     (*data)->cmds = new_cmd;
-        // else
-        //     current->next = new_cmd;
-        // current = new_cmd;
         new_cmd = ft_lstnew1(ft_split(av[i], " \t"), get_path(data, ft_split(av[i], " \t")[0]), av[i]);
+        if (!new_cmd)
+        {
+            clean_all(data);
+            perror("Error");
+            exit(1);
+        }
+        if (!current)
+            (*data)->cmds = new_cmd;
+        else
+            current->next = new_cmd;
+        current = new_cmd;
         i++;
     }
 }
@@ -162,13 +172,7 @@ void    print_commands(t_data *data)
     tmp = data->cmds;
     while (tmp)
     {
-        // int i = 0;
         printf("%s %s", tmp->path, tmp->command[0]);
-        // while (tmp->command[i])
-        // {
-        //     printf("%s ", tmp->command[i]);
-        //     i++;
-        // }
         printf("\n");
         tmp = tmp->next;
     }

@@ -57,7 +57,7 @@ void    child(t_data **data, char **env, int fd[2], t_cmd *tmp)
     }
     else
     {
-        // waitpid(pid, NULL, 0);
+        waitpid(pid, NULL, 0);
         close(fd[1]);
         close((*data)->old_fd);
         (*data)->old_fd = fd[0];
@@ -95,6 +95,7 @@ void    handle_first_cmd(t_data **data, char **env, int fd[2], t_cmd *tmp)
     }
     else
     {
+        pid = waitpid(pid, NULL, 0);
         close(fd[1]);
         if((*data)->old_fd != -1)
             close((*data)->old_fd);
@@ -120,11 +121,11 @@ void    handle_last_cmd(t_data **data, char **env, int fd[2], t_cmd *tmp)
     }
     else
     {
+        waitpid(pid, NULL, 0);
         close(fd[1]);
         if((*data)->old_fd != -1)
             close((*data)->old_fd);
         (*data)->old_fd = fd[0];
         // close(fd[0]);
-        // waitpid(pid, NULL, 0);
     }
 }
