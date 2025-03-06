@@ -32,10 +32,14 @@ typedef struct s_data
     int     old_fd;
     int     *pid;
     int     pid_index;
+    char    *infile_name;
 } t_data;
 
 
 /* FUNCTIONS */
+void	exit_with_message(t_data **data, char *msg);
+void    execute_commands(t_data **data, char **env, int fd[2]);
+void    parent_mode(t_data **data, int fd[2]);
 void   free_2d(char **arr);
 char    *get_path(t_data **data, char *command);
 void    free_command(t_cmd **cmd);
@@ -50,7 +54,7 @@ void    handle_last_cmd(t_data **data, char **env, int fd[2], t_cmd *tmp);
 void    handle_first_cmd(t_data **data, char **env, int fd[2], t_cmd *tmp);
 void    child(t_data **data, char **env, int fd[2], t_cmd *tmp);
 char **free_split(char **arr, int i);
-void    init_vars(t_data **data, char **av, int ac);
+void    init_vars(t_data **data, char **av, int ac, int fd[2]);
 void    set_path_line(t_data **data, char **env);
 void    free_command(t_cmd **cmd);
 void    clean_all(t_data **data);

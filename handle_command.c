@@ -1,127 +1,94 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_command.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/06 15:59:35 by abdel-ha          #+#    #+#             */
+/*   Updated: 2025/03/06 17:33:54 by abdel-ha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "piepx.h"
 
-void    handle_here_doc(t_data **data, int fd[2])
+void	parent_mode(t_data **data, int fd[2])
 {
-    (void)fd;
-    char *line;
-
-    while (1)
-    {
-        write(1, "heredoc> ", 9);
-        line = get_next_line(0);
-        if (!line)
-            break;
-        if (ft_strncmp(line, (*data)->limiter, ft_strlen((*data)->limiter)) == 0 && line[ft_strlen((*data)->limiter)] == '\n')
-        {
-            free(line);
-            break;
-        }
-        write((*data)->here_doc_fd, line, ft_strlen(line));
-        free(line);
-    }
-    close((*data)->here_doc_fd);
-    get_next_line(-1);
+	close(fd[1]);
+	if ((*data)->old_fd != -1)
+		close((*data)->old_fd);
+	(*data)->old_fd = fd[0];
 }
 
-void    check_command(t_data **data, t_cmd *tmp)
+void	check_command(t_data **data, t_cmd *tmp)
 {
-    if(tmp->path == NULL)
-        {
-            ft_putstr_fd("command not found\n", 2);
-            clean_all(data);
-            exit(1);
-        }
-        if(tmp->command[0][0] == '\0')
-        {
-            ft_putstr_fd("permission denied\n", 2);
-            clean_all(data);
-            exit(1);
-        }
+	if (tmp->path == NULL)
+		exit_with_message(data, "command not found\n");
+	if (tmp->command[0][0] == '\0')
+		exit_with_message(data, "permission denied\n");
 }
 
-void    child(t_data **data, char **env, int fd[2], t_cmd *tmp)
+void	execute_commands(t_data **data, char **env, int fd[2])
 {
-    int pid = fork();
-    if(pid == 0)
-    {
-        check_command(data, tmp);
-        dup2((*data)->old_fd, 0);
-        close(fd[0]);
-        dup2(fd[1], 1);
-        execve(tmp->path, tmp->command, env);
-    }
-    else
-    {
-        waitpid(pid, NULL, 0);
-        close(fd[1]);
-        close((*data)->old_fd);
-        (*data)->old_fd = fd[0];
-    }
+	t_cmd	*tmp;
+	int		i;
+
+	tmp = (*data)->cmds;
+	i = 0;
+	while (i < (*data)->nb_cmds)
+	{
+		if ((*data)->nb_cmds > 1 && i != (*data)->nb_cmds - 1)
+			if (pipe(fd) == -1)
+				exit_with_message(data, "pipe creation failed");
+		if (i == 0)
+			handle_first_cmd(data, env, fd, tmp);
+		else if (i == (*data)->nb_cmds - 1)
+			handle_last_cmd(data, env, fd, tmp);
+		else
+			child(data, env, fd, tmp);
+		parent_mode(data, fd);
+		tmp = tmp->next;
+		i++;
+	}
 }
 
-void    handle_first_cmd(t_data **data, char **env, int fd[2], t_cmd *tmp)
+void	fill_command(t_data **data, int ac, char **av)
 {
-    int pid = fork();
-    if(pid == 0)
-    {
-        check_command(data, tmp);
-        if ((*data)->here_doc)
-        {
-            (*data)->here_doc_fd = open("/tmp/abdo", O_RDONLY);
-            if ((*data)->here_doc_fd == -1)
-            {
-                perror("Error opening here_doc file");
-                clean_all(data);
-                exit(1);
-            }
-            dup2((*data)->here_doc_fd, 0);
-            close((*data)->here_doc_fd);
-        }
-            
-        else
-        {
-            close(fd[0]);
-            dup2((*data)->infile, 0);
-            close((*data)->infile);
-        }
-        dup2(fd[1], 1);
-        close(fd[1]);
-        execve(tmp->path, tmp->command, env);
-    }
-    else
-    {
-        pid = waitpid(pid, NULL, 0);
-        close(fd[1]);
-        if((*data)->old_fd != -1)
-            close((*data)->old_fd);
-        (*data)->old_fd = fd[0];
-    }
+	int		i;
+	t_cmd	*current;
+	t_cmd	*new_cmd;
+	char	**tmp;
+
+	i = 2 + (*data)->here_doc;
+	current = NULL;
+	while (i < ac - 1)
+	{
+		tmp = ft_split(av[i], " \t");
+		new_cmd = ft_lstnew1(tmp, get_path(data, tmp[0]), av[i]);
+		if (!new_cmd)
+		{
+			(free_2d(tmp)), (clean_all(data));
+			perror("Error");
+			exit(1);
+		}
+		if (!current)
+			(*data)->cmds = new_cmd;
+		else
+			current->next = new_cmd;
+		current = new_cmd;
+		i++;
+	}
 }
 
-void    handle_last_cmd(t_data **data, char **env, int fd[2], t_cmd *tmp)
+void	print_commands(t_data *data)
 {
-    (void)fd;
-    int pid = fork();
-    if(pid == 0)
-    {
-        check_command(data, tmp);
-        dup2((*data)->old_fd, 0);
-        dup2((*data)->outfile, 1);
-        close((*data)->old_fd);
-        close((*data)->outfile);
-        // close(fd[0]);
-        // close(fd[1]);
-        
-        execve(tmp->path, tmp->command, env);
-        // perror(tmp->command[0]);
-    }
-    else
-    {
-        waitpid(pid, NULL, 0);
-        // close(fd[1]);
-        if((*data)->old_fd != -1)
-            close((*data)->old_fd);
-        // (*data)->old_fd = fd[0];
-        // close(fd[0]);
-    }
+	t_cmd   *tmp;
+
+    tmp = data->cmds;
+	while (tmp)
+	{
+		printf("%s %s", tmp->path, tmp->command[0]);
+		printf("\n");
+		tmp = tmp->next;
+	}
 }

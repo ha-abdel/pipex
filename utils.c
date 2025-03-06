@@ -85,7 +85,7 @@ void    clean_all(t_data **data)
         free((*data)->path_line);
     if((*data)->here_doc)
         close((*data)->here_doc_fd);
-    // close((*data)->infile);
-    // close((*data)->outfile);
+    close((*data)->infile);
+    close((*data)->outfile);
     free(*data);
 }
