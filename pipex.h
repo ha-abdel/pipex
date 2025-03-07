@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   piepx.h                                            :+:      :+:    :+:   */
+/*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 13:54:49 by abdel-ha          #+#    #+#             */
-/*   Updated: 2025/03/07 13:54:50 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/07 15:21:51 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,13 @@ typedef struct s_data
 	int				*pid;
 	int				pid_index;
 	char			*infile_name;
+	char			*outfile_name;
 }					t_data;
 
 /* FUNCTIONS */
 void				exit_with_message(t_data **data, char *msg);
 void				execute_commands(t_data **data, char **env, int fd[2]);
-void				parent_mode(t_data **data, int fd[2]);
+void				parent_mode(t_data **data, int fd[2], int i);
 void				free_2d(char **arr);
 char				*get_path(t_data **data, char *command);
 void				free_command(t_cmd **cmd);

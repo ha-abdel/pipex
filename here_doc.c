@@ -6,11 +6,11 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 14:00:03 by abdel-ha          #+#    #+#             */
-/*   Updated: 2025/03/07 14:00:07 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/07 15:23:40 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "piepx.h"
+#include "pipex.h"
 
 void	ft_merge_strings(char **s1, char *s2)
 {
@@ -42,19 +42,20 @@ void	check_line(t_data **data, char **line, char **total)
 				ft_putstr_fd(*line, (*data)->here_doc_fd);
 				(free(*line)), (free(*total));
 				*total = NULL;
-				write(1, "here_doc>", 9);
+				write(1, "here_doc> ", 10);
 			}
 		}
 	}
+	get_next_line(-1);
 }
 
 void	handle_here_doc(t_data **data, int fd[2])
 {
-	char *line;
-	char *total;
+	char	*line;
+	char	*total;
 
 	total = NULL;
 	(void)fd;
-	write(1, "here_doc>", 9);
+	write(1, "here_doc> ", 10);
 	check_line(data, &line, &total);
 }

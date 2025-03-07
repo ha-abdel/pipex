@@ -6,11 +6,11 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 13:50:40 by abdel-ha          #+#    #+#             */
-/*   Updated: 2025/03/07 13:50:58 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/07 15:22:51 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "piepx.h"
+#include "pipex.h"
 
 t_cmd	*ft_lstnew1(char **command, char *path, char *av)
 {

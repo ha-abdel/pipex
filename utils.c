@@ -6,11 +6,11 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 13:51:29 by abdel-ha          #+#    #+#             */
-/*   Updated: 2025/03/07 13:51:46 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/07 15:23:07 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "piepx.h"
+#include "pipex.h"
 
 void	set_path_line(t_data **data, char **env)
 {
@@ -103,7 +103,5 @@ void	clean_all(t_data **data)
 		free((*data)->path_line);
 	if ((*data)->here_doc)
 		close((*data)->here_doc_fd);
-	close((*data)->infile);
-	close((*data)->outfile);
 	free(*data);
 }

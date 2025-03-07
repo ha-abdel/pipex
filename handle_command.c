@@ -6,14 +6,20 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 13:59:33 by abdel-ha          #+#    #+#             */
-/*   Updated: 2025/03/07 13:59:37 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/07 15:22:51 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "piepx.h"
+#include "pipex.h"
 
-void	parent_mode(t_data **data, int fd[2])
+void	parent_mode(t_data **data, int fd[2], int i)
 {
+	if (i == (*data)->nb_cmds - 1)
+	{
+		if ((*data)->old_fd != -1)
+			close((*data)->old_fd);
+		return ;
+	}
 	close(fd[1]);
 	if ((*data)->old_fd != -1)
 		close((*data)->old_fd);
@@ -46,7 +52,7 @@ void	execute_commands(t_data **data, char **env, int fd[2])
 			handle_last_cmd(data, env, fd, tmp);
 		else
 			child(data, env, fd, tmp);
-		parent_mode(data, fd);
+		parent_mode(data, fd, i);
 		tmp = tmp->next;
 		i++;
 	}
@@ -82,7 +88,7 @@ void	fill_command(t_data **data, int ac, char **av)
 
 void	print_commands(t_data *data)
 {
-	t_cmd *tmp;
+	t_cmd	*tmp;
 
 	tmp = data->cmds;
 	while (tmp)
