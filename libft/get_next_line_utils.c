@@ -6,7 +6,7 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:04:42 by abdel-ha          #+#    #+#             */
-/*   Updated: 2025/03/05 14:52:33 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/07 13:55:53 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,6 @@ char	*ft_strcpy(char *dest, char *src)
 	return (dest);
 }
 
-// char	*ft_strdup(char *s1)
-// {
-// 	int		len;
-// 	char	*result;
-
-// 	len = ft_strlen(s1) + 1;
-// 	result = (char *)ft_calloc(len, 1);
-// 	if (!result)
-// 		return (NULL);
-// 	ft_strcpy(result, s1);
-// 	return (result);
-// }
-
 char	*ft_strchr(char *s, int c)
 {
 	while ((char)c != *s)
@@ -50,27 +37,6 @@ char	*ft_strchr(char *s, int c)
 	}
 	return (s);
 }
-
-// char	*ft_strjoin(char *s1, char *s2)
-// {
-// 	int	s1len;
-// 	int	s2len;
-// 	int	totallen;
-// 	char	*ptr;
-
-// 	if (!s1 || !s2)
-// 		return (NULL);
-// 	s1len = ft_strlen(s1);
-// 	s2len = ft_strlen(s2);
-// 	totallen = s1len + s2len;
-// 	ptr = (char *)malloc(totallen + 1);
-// 	if (!ptr)
-// 		return (NULL);
-// 	ft_strcpy(ptr, s1);
-// 	ft_strcpy(ptr + s1len, s2);
-// 	ptr[totallen] = '\0';
-// 	return (ptr);
-// }
 
 char	*ft_substr(char *s, int start, int len)
 {

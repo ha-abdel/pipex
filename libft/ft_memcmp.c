@@ -6,7 +6,7 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 15:24:00 by abdel-ha          #+#    #+#             */
-/*   Updated: 2024/11/06 10:28:27 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/07 13:52:22 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_memcmp(void *s1, void *s2, int n)
 {
-	int				i;
+	int					i;
 	unsigned const char	*str1;
 	unsigned const char	*str2;
 

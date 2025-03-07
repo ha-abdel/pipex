@@ -6,17 +6,16 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 17:41:21 by abdel-ha          #+#    #+#             */
-/*   Updated: 2025/03/01 15:43:51 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/07 13:54:59 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include "get_next_line.h"
 # include <stdlib.h>
 # include <unistd.h>
-# include "get_next_line.h"
-
 
 typedef struct s_list
 {
@@ -24,7 +23,7 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-int				ft_strlen(char *s);
+int					ft_strlen(char *s);
 int					ft_isdigit(int c);
 
 int					ft_isalpha(int c);
@@ -39,16 +38,15 @@ void				*ft_memset(void *b, int c, int len);
 
 void				ft_bzero(void *s, int n);
 
-void				*ft_memcpy(void *dst,  void *src,
-						int n);
+void				*ft_memcpy(void *dst, void *src, int n);
 
-void				*ft_memmove(void *dst,  void *src, int len);
+void				*ft_memmove(void *dst, void *src, int len);
 
-int				ft_strlcpy(char *dst, char *src, int dstsize);
+int					ft_strlcpy(char *dst, char *src, int dstsize);
 
-int				ft_strlcat(char *dst, char *src, int dstsize);
+int					ft_strlcat(char *dst, char *src, int dstsize);
 
-char				*ft_strtrim(char  *s1, char  *set);
+char				*ft_strtrim(char *s1, char *set);
 
 int					ft_toupper(int c);
 
@@ -58,32 +56,31 @@ char				*ft_strchr(char *s, int c);
 
 char				*ft_strrchr(char *s, int c);
 
-int					ft_strncmp( char *s1,  char *s2, int n);
+int					ft_strncmp(char *s1, char *s2, int n);
 
-void				*ft_memchr( void *s, int c, int n);
+void				*ft_memchr(void *s, int c, int n);
 
-int					ft_memcmp( void *s1,  void *s2, int n);
+int					ft_memcmp(void *s1, void *s2, int n);
 
-char				*ft_strnstr( char *haystack,  char *needle,
-						int len);
+char				*ft_strnstr(char *haystack, char *needle, int len);
 
-int					ft_atoi( char *str);
+int					ft_atoi(char *str);
 
 void				*ft_calloc(int count, int size);
 
-char				*ft_strdup( char *s1);
+char				*ft_strdup(char *s1);
 
 char				*ft_substr(char *s, int start, int len);
 
-char				*ft_strtrim(char  *s1, char  *set);
+char				*ft_strtrim(char *s1, char *set);
 
-char				*ft_strjoin(char  *s1, char  *s2);
+char				*ft_strjoin(char *s1, char *s2);
 
-char				**ft_split(char  *s, char *sep);
+char				**ft_split(char *s, char *sep);
 
 char				*ft_itoa(int n);
 
-char				*ft_strmapi(char  *s, char (*f)(unsigned int, char));
+char				*ft_strmapi(char *s, char (*f)(unsigned int, char));
 
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
 

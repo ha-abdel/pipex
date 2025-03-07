@@ -6,7 +6,7 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 15:28:38 by abdel-ha          #+#    #+#             */
-/*   Updated: 2024/10/31 17:42:56 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/07 13:53:22 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_strmapi(char *s, char (*f)(unsigned int, char))
 {
-	int	len;
-	int	i;
+	int		len;
+	int		i;
 	char	*ptr;
 
 	if (!s || !f)

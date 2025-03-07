@@ -6,15 +6,14 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 15:26:10 by abdel-ha          #+#    #+#             */
-/*   Updated: 2025/03/03 17:08:44 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/07 13:55:26 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char **free_split(char **arr, int i)
+char	**free_split(char **arr, int i)
 {
-
 	while (i > 0)
 		free(arr[--i]);
 	free(arr);
@@ -51,7 +50,7 @@ static int	ft_count_words(char *s, char *sep)
 {
 	int	count;
 	int	i;
-	int		inword;
+	int	inword;
 
 	count = 0;
 	i = 0;
@@ -72,7 +71,7 @@ static int	ft_count_words(char *s, char *sep)
 
 char	**ft_split(char *s, char *sep)
 {
-	int	i;
+	int		i;
 	char	**arr;
 	int		index;
 
@@ -80,7 +79,7 @@ char	**ft_split(char *s, char *sep)
 		return (NULL);
 	i = 0;
 	index = ft_count_words(s, sep);
-	arr = (char **)malloc((index + 1 )* sizeof(char *));
+	arr = (char **)malloc((index + 1) * sizeof(char *));
 	if (!arr)
 		return (NULL);
 	index = 0;

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 15:59:35 by abdel-ha          #+#    #+#             */
-/*   Updated: 2025/03/06 17:33:54 by abdel-ha         ###   ########.fr       */
+/*   Created: 2025/03/07 13:59:33 by abdel-ha          #+#    #+#             */
+/*   Updated: 2025/03/07 13:59:37 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ void	fill_command(t_data **data, int ac, char **av)
 
 void	print_commands(t_data *data)
 {
-	t_cmd   *tmp;
+	t_cmd *tmp;
 
-    tmp = data->cmds;
+	tmp = data->cmds;
 	while (tmp)
 	{
 		printf("%s %s", tmp->path, tmp->command[0]);

@@ -6,7 +6,7 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:04:32 by abdel-ha          #+#    #+#             */
-/*   Updated: 2025/03/03 13:41:25 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/07 13:56:57 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,9 @@
 
 char	*get_next_line(int fd);
 char	*ft_strcpy(char *dest, char *src);
-char	*ft_strdup( char *s1);
-// int		ft_strlen(char *s);
-// void	*ft_calloc(int count, int size);
+char	*ft_strdup(char *s1);
 char	*ft_strchr(char *s, int c);
-char	*ft_strjoin(char  *s1, char  *s2);
+char	*ft_strjoin(char *s1, char *s2);
 char	*ft_substr(char *s, int start, int len);
 
 #endif

@@ -6,53 +6,18 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:04:59 by abdel-ha          #+#    #+#             */
-/*   Updated: 2025/03/03 13:41:35 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/07 13:56:38 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 #include "libft.h"
 
-// int	ft_strlen(char *s)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (!s)
-// 		return (0);
-// 	while (s[i])
-// 	{
-// 		i++;
-// 	}
-// 	return (i);
-// }
-
-// void	*ft_calloc(int count, int size)
-// {
-// 	int		len;
-// 	void	*ptr;
-// 	int		i;
-
-// 	len = count * size;
-// 	i = 0;
-// 	if (size != 0 && count > (int)-1 / size)
-// 		return (NULL);
-// 	ptr = (void *)malloc(len);
-// 	if (!ptr)
-// 		return (NULL);
-// 	while (i < len)
-// 	{
-// 		((char *)ptr)[i] = '\0';
-// 		i++;
-// 	}
-// 	return (ptr);
-// }
-
 char	*fill_line(char **leftover)
 {
 	char	*line;
 	char	*new_leftover;
-	int	i;
+	int		i;
 
 	if (!*leftover || **leftover == '\0')
 		return (NULL);
@@ -79,7 +44,7 @@ char	*fill_line(char **leftover)
 char	*read_data_from_buffer(char **leftover, int fd)
 {
 	char	*buffer;
-	int	bytes_read;
+	int		bytes_read;
 	char	*temp;
 
 	buffer = ft_calloc(BUFFER_SIZE + 1, 1);

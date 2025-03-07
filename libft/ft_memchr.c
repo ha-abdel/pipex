@@ -6,7 +6,7 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 15:23:49 by abdel-ha          #+#    #+#             */
-/*   Updated: 2024/11/06 10:28:40 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/07 13:52:10 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*ft_memchr(void *s, int c, int n)
 {
-	int			i;
+	int				i;
 	unsigned char	tofind;
 	unsigned char	*ptr;
 

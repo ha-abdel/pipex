@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   here_doc.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/07 14:00:03 by abdel-ha          #+#    #+#             */
+/*   Updated: 2025/03/07 14:00:07 by abdel-ha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "piepx.h"
 
 void	ft_merge_strings(char **s1, char *s2)
@@ -38,8 +50,8 @@ void	check_line(t_data **data, char **line, char **total)
 
 void	handle_here_doc(t_data **data, int fd[2])
 {
-	char	*line;
-	char	*total;
+	char *line;
+	char *total;
 
 	total = NULL;
 	(void)fd;

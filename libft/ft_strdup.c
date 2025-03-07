@@ -6,7 +6,7 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 15:27:18 by abdel-ha          #+#    #+#             */
-/*   Updated: 2025/03/03 16:57:36 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/07 13:52:59 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_strdup(char *s1)
 {
-	int	len;
+	int		len;
 	char	*result;
 
 	len = ft_strlen(s1) + 1;

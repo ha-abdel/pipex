@@ -6,7 +6,7 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 15:27:51 by abdel-ha          #+#    #+#             */
-/*   Updated: 2025/03/05 15:05:41 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/07 13:53:05 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	int	s1len;
-	int	s2len;
-	int	totallen;
+	int		s1len;
+	int		s2len;
+	int		totallen;
 	char	*ptr;
 
 	if (!s1 && !s2)

@@ -6,7 +6,7 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 15:24:33 by abdel-ha          #+#    #+#             */
-/*   Updated: 2024/11/06 10:33:00 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/07 13:52:34 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*ft_memcpy(void *dst, void *src, int n)
 {
-	int				i;
+	int					i;
 	unsigned char		*d;
 	const unsigned char	*s;
 
