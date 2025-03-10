@@ -6,7 +6,7 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 13:50:40 by abdel-ha          #+#    #+#             */
-/*   Updated: 2025/03/07 15:22:51 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/10 12:15:21 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,22 @@ t_cmd	*ft_lstnew1(char **command, char *path, char *av)
 
 	l = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!l)
-		return (NULL);
+		return (free(path), NULL);
 	l->command = command;
 	if (!(l->command[0]))
 	{
-		l->command = calloc(2, sizeof(char *));
+		l->command = ft_calloc(2, sizeof(char *));
 		if (!l->command)
-			return (NULL);
+			return (free(path), NULL);
 		l->command[0] = ft_strdup(av);
 		l->command[1] = NULL;
 	}
 	l->path = path;
+	if (ft_strchr(command[0], '/'))
+	{
+		l->path = ft_strdup(command[0]);
+		free(path);
+	}
 	l->next = NULL;
 	return (l);
 }

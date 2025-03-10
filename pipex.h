@@ -6,7 +6,7 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 13:54:49 by abdel-ha          #+#    #+#             */
-/*   Updated: 2025/03/07 15:21:51 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/10 12:17:23 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft/get_next_line.h"
 # include "libft/libft.h"
+# include <errno.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -41,13 +42,12 @@ typedef struct s_data
 	int				nb_cmds;
 	char			*path_line;
 	int				old_fd;
-	int				*pid;
-	int				pid_index;
 	char			*infile_name;
 	char			*outfile_name;
 }					t_data;
 
-/* FUNCTIONS */
+void				handle_file_with_cmd(t_data **data, t_cmd *tmp, char **env);
+int					get_array_length(t_cmd *tmp);
 void				exit_with_message(t_data **data, char *msg);
 void				execute_commands(t_data **data, char **env, int fd[2]);
 void				parent_mode(t_data **data, int fd[2], int i);
@@ -61,8 +61,7 @@ t_cmd				*ft_lstlast1(t_cmd *lst);
 void				open_files(t_data **data, char **av, int ac);
 void				handle_here_doc(t_data **data, int fd[2]);
 void				check_command(t_data **data, t_cmd *tmp);
-void				handle_last_cmd(t_data **data, char **env, int fd[2],
-						t_cmd *tmp);
+void				handle_last_cmd(t_data **data, char **env, t_cmd *tmp);
 void				handle_first_cmd(t_data **data, char **env, int fd[2],
 						t_cmd *tmp);
 void				child(t_data **data, char **env, int fd[2], t_cmd *tmp);

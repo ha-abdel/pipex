@@ -6,7 +6,7 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 15:28:02 by abdel-ha          #+#    #+#             */
-/*   Updated: 2024/11/06 10:22:54 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/10 09:46:15 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	ft_strlcat(char *dst, char *src, int dstsize)
 	int	j;
 
 	i = 0;
-	if (dst == NULL && dstsize == 0)
-		return (ft_strlen(src));
+	if (dst == NULL || src == NULL)
+		return (0);
 	srclen = ft_strlen(src);
 	dstlen = ft_strlen(dst);
 	j = dstlen;

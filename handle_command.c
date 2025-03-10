@@ -6,7 +6,7 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 13:59:33 by abdel-ha          #+#    #+#             */
-/*   Updated: 2025/03/07 15:22:51 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/10 12:28:18 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	parent_mode(t_data **data, int fd[2], int i)
 
 void	check_command(t_data **data, t_cmd *tmp)
 {
-	if (tmp->path == NULL)
-		exit_with_message(data, "command not found\n");
+	// if (tmp->path == NULL && access(tmp->command[0], X_OK))
+	// 	exit_with_message(data, "command not found\n");
 	if (tmp->command[0][0] == '\0')
 		exit_with_message(data, "permission denied\n");
 }
@@ -45,11 +45,11 @@ void	execute_commands(t_data **data, char **env, int fd[2])
 	{
 		if ((*data)->nb_cmds > 1 && i != (*data)->nb_cmds - 1)
 			if (pipe(fd) == -1)
-				exit_with_message(data, "pipe creation failed");
+				exit_with_message(data, "pipe creation failed\n");
 		if (i == 0)
 			handle_first_cmd(data, env, fd, tmp);
 		else if (i == (*data)->nb_cmds - 1)
-			handle_last_cmd(data, env, fd, tmp);
+			handle_last_cmd(data, env, tmp);
 		else
 			child(data, env, fd, tmp);
 		parent_mode(data, fd, i);
@@ -83,18 +83,5 @@ void	fill_command(t_data **data, int ac, char **av)
 			current->next = new_cmd;
 		current = new_cmd;
 		i++;
-	}
-}
-
-void	print_commands(t_data *data)
-{
-	t_cmd	*tmp;
-
-	tmp = data->cmds;
-	while (tmp)
-	{
-		printf("%s %s", tmp->path, tmp->command[0]);
-		printf("\n");
-		tmp = tmp->next;
 	}
 }
