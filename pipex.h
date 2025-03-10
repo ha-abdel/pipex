@@ -6,7 +6,7 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 13:54:49 by abdel-ha          #+#    #+#             */
-/*   Updated: 2025/03/10 12:17:23 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/10 13:39:50 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 typedef struct s_cmd
 {
 	char			**command;
-	struct s_cmd	*next;
 	char			*path;
+	struct s_cmd	*next;
 
 }					t_cmd;
 

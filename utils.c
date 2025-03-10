@@ -6,7 +6,7 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 13:51:29 by abdel-ha          #+#    #+#             */
-/*   Updated: 2025/03/07 15:23:07 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/10 13:39:15 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	clean_all(t_data **data)
 		next = tmp->next;
 		if (tmp->path)
 			free(tmp->path);
-		free_command(&tmp);
+		free_2d(tmp->command);
 		free(tmp);
 		tmp = next;
 	}

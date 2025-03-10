@@ -6,7 +6,7 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 13:59:33 by abdel-ha          #+#    #+#             */
-/*   Updated: 2025/03/10 12:28:18 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:18:38 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,20 @@ void	parent_mode(t_data **data, int fd[2], int i)
 
 void	check_command(t_data **data, t_cmd *tmp)
 {
-	// if (tmp->path == NULL && access(tmp->command[0], X_OK))
-	// 	exit_with_message(data, "command not found\n");
+	if (tmp->path == NULL)
+	{
+		ft_putstr_fd("zsh: command not found:", 2);
+		ft_putendl_fd(tmp->command[0], 2);
+		clean_all(data);
+		exit(1);
+	}
 	if (tmp->command[0][0] == '\0')
-		exit_with_message(data, "permission denied\n");
+	{
+		ft_putstr_fd("zsh: permission denied:", 2);
+		ft_putendl_fd(tmp->command[0], 2);
+		clean_all(data);
+		exit(1);
+	}
 }
 
 void	execute_commands(t_data **data, char **env, int fd[2])

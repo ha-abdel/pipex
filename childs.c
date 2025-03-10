@@ -6,23 +6,12 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:59:21 by abdel-ha          #+#    #+#             */
-/*   Updated: 2025/03/10 12:50:28 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:56:01 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	get_array_length(t_cmd *tmp)
-{
-	int	i;
-
-	i = 0;
-	while (tmp->command[i])
-	{
-		i++;
-	}
-	return (i);
-}
 void	handle_file_with_cmd(t_data **data, t_cmd *tmp, char **env)
 {
 	char	**command;

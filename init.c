@@ -6,7 +6,7 @@
 /*   By: abdel-ha <abdel-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 13:50:04 by abdel-ha          #+#    #+#             */
-/*   Updated: 2025/03/10 12:52:49 by abdel-ha         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:56:12 by abdel-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,16 @@ void	init_vars(t_data **data, char **av, int ac, int fd[2])
 		handle_here_doc(data, fd);
 		close((*data)->here_doc_fd);
 	}
+}
+
+int	get_array_length(t_cmd *tmp)
+{
+	int	i;
+
+	i = 0;
+	while (tmp->command[i])
+	{
+		i++;
+	}
+	return (i);
 }
